@@ -1,5 +1,5 @@
 
-export default function(token: string, chat_id: string, text: string) {
+export default function(token: string, chat_id: number, text: string) {
 	const _url = `https://api.telegram.org/bot${token}/sendMessage`;
 
 	return fetch(_url, {

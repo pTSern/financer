@@ -7,7 +7,7 @@ declare namespace Cloudflare {
 	}
 	interface Env {
 		PTS_FINANCER_BOT_TOKEN: string
-		PTS_FINANCER_BOT_KV: DurableObjectStorage
+		PTS_FINANCER_BOT_KV: KVNamespace<string>
 	}
 }
 interface Env extends Cloudflare.Env {}
