@@ -1,26 +1,37 @@
-/**
- * Welcome to Cloudflare Workers! This is your first worker.
- *
- * - Run `npm run dev` in your terminal to start a development server
- * - Open a browser tab at http://localhost:8787/ to see your worker in action
- * - Run `npm run deploy` to publish your worker
- *
- * Bind resources to your worker in `wrangler.jsonc`. After adding bindings, a type definition for the
- * `Env` object can be regenerated with `npm run cf-typegen`.
- *
- * Learn more at https://developers.cloudflare.com/workers/
- */
-
 export default {
-	async fetch(request, env, ctx): Promise<Response> {
-		const url = new URL(request.url);
-		switch (url.pathname) {
-			case '/message':
-				return new Response('Hello, World!');
-			case '/random':
-				return new Response(crypto.randomUUID());
-			default:
-				return new Response('Not Found', { status: 404 });
+	async fetch(request, env): Promise<Response> {
+    	const _url = new URL(request.url);
+    	if (_url.pathname !== "/telegram") {
+    		return new Response("OK", { status: 200 });
+    	}
+
+		if(request.method !== "POST") return new Response('Method not allowed', { status: 200 })
+
+		const _update = await request.json() as any;
+		console.log('Received update:', _update);
+
+		if(_update.message && _update.message.text) {
+			const _chat_id = _update.message.chat.id;
+			const _text = _update.message.text;
+
+			if(_text === '/hello') {
+				const _current = new Date().toISOString();
+				const _last = await env.PTS_FINANCER_BOT_KV.get<string>('last_hello');
+				await env.PTS_FINANCER_BOT_KV.put('last_hello', _current);
+				await _send(env.PTS_FINANCER_BOT_TOKEN, _chat_id, `OK SIR \nLast: ${_last}\nCurrent: ${_current}`);
+			}
 		}
+
+		return new Response('OK', { status: 200 })
 	},
 } satisfies ExportedHandler<Env>;
+
+async function _send(token: string, chat_id: string, text: string) {
+	const _url = `https://api.telegram.org/bot${token}/sendMessage`;
+
+	await fetch(_url, {
+		method: 'POST',
+		headers: { 'content-type': 'application/json' },
+		body: JSON.stringify({ chat_id, text })
+	});
+}
