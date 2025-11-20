@@ -28,3 +28,9 @@ wrangler secret put PTS_FINANCER_BOT_TOKEN
 wrangler kv namespace create PTS_FINANCER_BOT_KV
 ```
 > Replace the `id` in wrangler.toml to the created namespace id
+
+#Other
++ Watch logs
+```bash
+wrangler tail
+```
