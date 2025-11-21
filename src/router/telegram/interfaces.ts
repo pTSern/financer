@@ -1,5 +1,8 @@
 
 export namespace NSTelegram {
+	export type TCmdHandler = pFlex.TFunction<[string, IUpdate, KVNamespace<string>, ...string[]], Promise<Response>>;
+	export type TActionHandler = pFlex.TFunction<[IUpdate, Env], Promise<Response>>;
+
 	export interface IUser {
 		id: number;
 		is_bot: boolean;
