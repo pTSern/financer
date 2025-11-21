@@ -1,7 +1,6 @@
-import send from "../../../manager/send";
 import NSTelegram from "../interfaces";
 
-const _: NSTelegram.TCmdHandler = async (_token, _msg, _env, _first, _second, _is_int, _reapeat) => {
+const _: NSTelegram.TCmdHandler = async (_msg, _env, _first, _second, _is_int, _reapeat) => {
 	const first = Number(_first || "0");
 	const second = Number(_second || '99');
 	const is_int = Number(_is_int || "1");
@@ -18,7 +17,7 @@ const _: NSTelegram.TCmdHandler = async (_token, _msg, _env, _first, _second, _i
 		}
 
 	}
-	return send(_token, _msg.message.chat.id, `Random: ${_res.join(', ')}`);
+	return `Random: ${_res.join(', ')}`;
 }
 
 export default _;

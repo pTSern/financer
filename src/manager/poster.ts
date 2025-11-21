@@ -5,7 +5,7 @@ export default async function(request: Request, env: Env) {
     	const _url = new URL(request.url);
 		const _json = await request.json() as any;
 		const _paths = _url.pathname.split("/");
-		console.log("\n\n[POSTER] Log: \npathname: ", _paths);
+		console.log("\n\n[POSTER] Log: \n\tpathname: ", _paths);
 
 		const _router = _paths[1];
 		const _action = _paths[2];

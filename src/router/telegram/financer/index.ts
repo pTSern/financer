@@ -1,7 +1,6 @@
 import hello from "./hello";
 import ITelegram from "./../interfaces";
 import ping from "./ping";
-import send from "../../../manager/send";
 import random from "./random";
 
 const commands = [ 'hello', 'ping', 'random' ] as const;
@@ -20,7 +19,7 @@ export default function(_json: ITelegram.IUpdate, env: Env) {
 		console.log(`[FINANCER] Log: \n\tCommand: ${_command} \n\tArgs: ${_args.join(', ')}`);
 
 		const _commander = commander[_command];
-		return _commander ? _commander(env.PTS_FINANCER_BOT_TOKEN, _json, env.PTS_FINANCER_BOT_KV, ..._args) : send(env.PTS_FINANCER_BOT_TOKEN, _json.message.chat.id, `[FINANCER] Error >> Unknown command: ${_command}`);
+		return _commander ? _commander(env.PTS_FINANCER_BOT_TOKEN, _json, env.PTS_FINANCER_BOT_KV, ..._args) : Promise.resolve(`[FINANCER] Error >> Unknown command: ${_command}`);
 	}
 }
 

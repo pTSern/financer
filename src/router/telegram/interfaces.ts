@@ -1,7 +1,7 @@
 
 export namespace NSTelegram {
-	export type TCmdHandler = pFlex.TFunction<[string, IUpdate, KVNamespace<string>, ...string[]], Promise<Response>>;
-	export type TActionHandler = pFlex.TFunction<[IUpdate, Env], Promise<Response>>;
+	export type TCmdHandler = pFlex.TFunction<[IUpdate, KVNamespace<string>, ...string[]], Promise<string>>;
+	export type TActionHandler = pFlex.TFunction<[IUpdate, Env], Promise<string>>;
 
 	export interface IUser {
 		id: number;
