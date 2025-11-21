@@ -1,4 +1,4 @@
-import send from "../../manager/send";
+import send from "../../../manager/send";
 
 export default async function(token: string, chat_id: number, env: KVNamespace<string>) {
 	const _current = new Date().toISOString();
